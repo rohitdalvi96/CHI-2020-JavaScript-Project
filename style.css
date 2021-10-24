@@ -1,0 +1,133 @@
+*{
+    margin: 5;
+    padding: 5;
+    font-family: Century Gothic;
+}
+
+#home{
+    background-image: url(./background.jpg);
+    background-position: center;
+    width: 100%;
+    height: max-content;
+}
+
+.logo{
+    margin-top: 1vh;
+    text-align: center;
+}
+
+.logo1{
+    margin-top: -6vh;
+    margin-left: 40vw;
+}
+.logo2{
+    margin-top: -8vh;
+    margin-left: 20vw;  
+}
+.logo3{
+    margin-top: -8vh;
+    margin-left: 60vw;
+
+}
+.logo4{
+    margin-top: -8vh;
+    margin-left: 80vw;
+}
+
+.about{
+    margin-top: 4vh;
+}
+
+.event{
+    margin-top: 2vh;
+    font-size: 45px;
+    font-style: italic;
+    color: firebrick;
+    text-align: left;
+    background-color: bisque;  
+}
+
+.room{
+    text-align: right;
+    font-size: 20px;
+    margin-right: 3vw;
+    font-weight: bold;
+    color: forestgreen;
+}
+
+.time{
+    text-align: right;
+    font-size: 20px;
+    margin-right: 3vw;
+    font-weight: bold;
+    color: forestgreen;
+}
+
+.type{
+    text-align: right;
+    font-size: 20px;
+    margin-right: 3vw;
+    font-weight: bold;
+    color: forestgreen;
+}
+.topic{
+    text-align: left;
+    font-size: 20px;
+    margin-left: 3vw;
+     font-weight: bold;
+    color: brown;
+}
+.doiURL{
+    text-align: left;
+    font-size: 20px;
+    margin-left: 3vw;
+    font-weight: bold;
+    color: brown;
+}
+
+.drop{
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10vh;
+}
+
+.radio{
+    font-size: 20px;
+    text-align: center;
+    margin-top: 7vh;
+    font-weight: bold;
+}
+
+.required-field{
+    text-align: center;
+    font-size: 15px;
+    margin-top: -5vh;
+    font-weight: bold;
+    
+}
+
+.submit {
+    text-align: center;
+    margin-top: 6vh;
+    font-weight: bolder;
+    
+}
+
+.top{
+    font-style: italic;
+    color:darkorange;
+    margin-top: -96vh;
+    position: absolute;
+}
+
+.left{
+    font-style: italic;
+    color: navy;
+    margin-left: 3vw;
+    position: absolute;
+    top: 22vh;
+    height: 83%;
+
+}
+
+

@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+
+    <div class="event" id="event">Sponsors: 
+
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>    
+    
+    <section id="sponsors"> 
+<div class="logo1" id="logo1"> 
+    <img src="spnsr1.jpg"  style="width: 160px;height: 50px;">
+</div> 
+<div class="logo2" id="logo2"> 
+    <img src="alibaba.jpg"  style="width: 160px;height: 50px;">
+</div> 
+<div class="logo3" id="logo3"> 
+    <img src="AI.jpg"  style="width: 160px;height: 50px;">
+</div> 
+<div class="logo4" id="logo4"> 
+    <img src="amz.jpg"  style="width: 160px;height: 50px;">
+</div> 
+    </section>
+    </div> 
+    
+   <section id="home">
+<div class="logo" id="logo"> 
+    <img src="chi20.jpg"  style="width: 400px;height: auto;">
+</div>     
+       <div class = "required-field" id= "field"> 
+<select id="time" style="font-size: 20px; border-radius: 8px; background-color:wheat;" onchange="timeDropdown(document.getElementById('time').value);" name="time"> </select>     
+<select id="timeDropdown" style="font-size: 20px; border-radius: 8px; background-color:wheat; "> </select> <br>
+    </div>
+    
+<div class = "radio" id = "radio">    
+    <input type="radio" id="radioPaper" name="typefilter" value="paper" style="text-decoration: none;color: black;">   
+        <label choose="paper">Paper session</label><br> 
+    <input type="radio" id="radioOther" name="typefilter" value="other" style="text-decoration: none;color: black;">   
+        <label choose="other">Other session</label><br>
+    <input type="radio" id="radioAll" name="typefilter" value="All" style="text-decoration: none;color: black;">    
+        <label choose="Everything">Each session</label><br>  
+</div>   
+<div class = "submit" id= "submit" > 
+    <input type="submit" style="font-size: 20px; border: 2px solid #4CAF50; border-radius: 8px; background-color: wheat;" onclick= "submitClicked();" value="SUBMIT"/><br>
+    <p>After submitting, Scroll down for Information<br>related to date and time selected.</p><br><br>
+</div> 
+       
+        <div class="top" id="top-marquee"> 
+        
+<marquee width="100%" direction="left" height="20%">
+    <h3><u>Welcome to CHI 2020.</u></h3> <b>For Attendees: Planning (Registration, Visiting the USA, Hotels, Honolulu) | Program (Weekend Activities, Full Schedule of Events, Proceedings, Live Streaming, Best Papers and Honourable Mentions) | Lunches (Community Lunches, Diversity and Inclusion Lunch, SIGCHI Town Hall, MeetUps@CHI)</b>
+</marquee>
+	</div>
+       
+       <div class="left" id="left-marquee">    
+<marquee width="60%" direction="up" height="83%">
+    <h4><u>Past Deadlines</u></h4>
+    <b>
+> August 1st, 2019 <br>
+SIGCHI Student Travel Grant
+<br><br>
+        
+> September 13th, 2019<br>
+Papers: Title, abstract, authors, <br>
+subcommittee choice, and all other metadata
+<br><br>
+        
+> September 20th, 2019<br>
+Papers: Submission files
+<br><br>
+        
+> October 16th, 2019<br>
+Case Studies, Courses, Doctoral Consortium,<br>
+Workshops/Symposia
+<br><br>
+        
+> November 15th, 2019<br>
+Gary Marsden Student Development Fund
+<br><br>
+        
+> December 18th, 2019<br>
+Special Interest Groups, Panels
+<br><br>
+        
+> January 6th, 2020<br>
+Alt.CHI, Interactivity/Demos,<br>
+Late-Breaking Works,  Student Game Competition, 
+<br>Student Research Competition
+<br><br>
+        
+> February 15th, 2020<br>
+Gary Marsden Student Development Fund
+        <br><br> </b>
+</marquee>
+       </div>  
+       
+       <div id = "head"> </div>
+          
+</section>
+       
+<script>
+
+var xmlhttp = new XMLHttpRequest();
+
+    var schedulingObject = {};
+    xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+         
+        var parsedObj = JSON.parse(xmlhttp.responseText);    
+
+        schedulingObject = parsedObj;
+        date(parsedObj);
+        dateDropdown(parsedObj);
+
+    }
+};
+
+xmlhttp.open("GET", "scheduling.json", true);
+xmlhttp.send();    
+    
+function date(objs) {
+
+    var day = "";
+    var dayArray = [];
+    var dateArray = [];
+    for(i in objs){
+        day = day + " " + objs[i].day;
+        dayArray.push(objs[i].day);
+        date = date + " " + objs[i].date;
+        dateArray.push(objs[i].date);       
+    }  
+}
+    
+function dateDropdown(objs){
+
+    var str = "";
+    for (obj in objs){
+        str = str + '<option value="' + objs[obj].date+ '">' + objs[obj].date + '-' + objs[obj].day +'</option>';
+    }
+
+    document.getElementById("time").innerHTML = str ;
+    timeDropdown(objs[0].date);
+}
+    
+function timeDropdown(date){
+    
+    var shorttime = "";
+    var timeObj = schedulingObject.filter(function(d) {return d.date == date});
+    var slots = timeObj[0].slots;
+    for(slot in slots){
+         shorttime = shorttime + '<option value="' + slot + '">' + slots[slot].time + '</option>';
+    }
+
+    document.getElementById("timeDropdown").innerHTML = shorttime ;
+}
+
+function submitClicked(){
+
+    var date = document.getElementById("time").value;
+    var time = document.getElementById("timeDropdown").value; 
+    var filteredObj = schedulingObject.filter(function(d) {return d.date == date});
+    
+    var filteredSlots = filteredObj[0].slots[time];
+    var filteredSessions = filteredSlots.sessions;
+  
+    if (document.getElementById("radioPaper").checked){
+        radio = "paper";
+    }else if (document.getElementById("radioOther").checked){
+         radio = "other";
+    }else {
+        radio = "All";
+    } 
+    
+    var InnerHtml = "";
+
+    for (i in filteredSessions){
+        if ((radio == 'paper' && filteredSessions[i].type == 'paper') || (radio == 'other' && filteredSessions[i].type != 'paper') || radio == 'All')
+        {
+        InnerHtml = InnerHtml +'<div id = "'+ filteredSessions[i].sessionId +'">';
+            
+        InnerHtml = InnerHtml + '<div class="titles" id="titles"><h2> ' +  filteredSessions[i].title + ' <input style="background-color:lightsalmon; border-radius: 8px; font-size: 20px;" type="submit"  onclick="MoreInfo('+ i +'); "value="More Info";/> </h2></div>';
+            
+        InnerHtml = InnerHtml + '<div class="room"> Room - ' +  filteredSessions[i].room + '</div>';
+            
+        InnerHtml = InnerHtml + '<div class="time" id="StartTime">  Start Time - ' +  filteredSessions[i].time + '</div>';
+            
+        InnerHtml = InnerHtml + '<div class="type" id="type">Type - ' +  filteredSessions[i].type + '</div> <br>';
+            
+        InnerHtml = InnerHtml + '<div id = "'+i+'"> </div>'
+            
+        InnerHtml = InnerHtml + '</div>';
+        
+        }
+    }
+    
+    document.getElementById("head").innerHTML =InnerHtml;
+  
+}
+  
+function MoreInfo(sessionId){
+
+    var date = document.getElementById("time").value;
+    var time = document.getElementById("timeDropdown").value; 
+    var filteredObj = schedulingObject.filter(function(d) {return d.date == date});
+    var InnerHtml = "";
+    
+    var filteredSlots = filteredObj[0].slots[time];
+    var filteredSessions = filteredSlots.sessions[sessionId];
+    var filteredSubmissions = filteredSessions.submissions;
+        for (i in filteredSubmissions){
+            InnerHtml = InnerHtml + '<div class="topic" id="topic">  Topic - ' +  filteredSubmissions[i].title + '  </div> ';
+            
+            InnerHtml = InnerHtml + '<div class="doiURL" id="doiURL"> doiURL - <a target="_blank" href="'+filteredSubmissions[i].doiUrl+'"> ' +  filteredSubmissions[i].doiUrl + ' </a> </div> <br>';
+
+}
+      
+    document.getElementById(sessionId).innerHTML = InnerHtml;
+}
+    
+</script>
+
+</body>
+</html>
+
+   
